@@ -57,6 +57,7 @@
     wget
     git
     emacs
+    gocode # for vim/emacs go completion
     chromium
     libreoffice
     linuxPackages.nvidiabl
