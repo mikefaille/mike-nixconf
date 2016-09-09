@@ -175,14 +175,25 @@
 #    xserver.synaptics.enable = true;
 #    xserver.multitouch.enable = true;
 
-     xserver.desktopManager.gnome3.enable = true;
-     xserver.displayManager.gdm.enable = true;
-     xserver.videoDrivers = [ "nvidiaBeta" ];
-     acpid.enable = true;
+    xserver.desktopManager.gnome3.enable = true;
+    xserver.displayManager.gdm.enable = true;
+    xserver.videoDrivers = [ "nvidiaBeta" ];
+    acpid.enable = true;
 
-     # Output journald log on tty12
-     journald.console = "/dev/tty12";
+    # Output journald log on tty12
+    journald.console = "/dev/tty12";
+
+
   };
+
+  # KSM
+  hardware.enableKSM = true;
+
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.support32Bit = true;
+
+  #Enable support for SANE scanners.
+  hardware.sane.enable = true;
 
   hardware.pulseaudio.enable = true;
 
@@ -194,13 +205,6 @@
 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";
-
-  hardware.opengl.driSupport32Bit = true;
-  hardware.pulseaudio.support32Bit = true;
-
-  #Enable support for SANE scanners.
-  hardware.sane.enable = true;
-
 
   powerManagement.enable = true;
   security.apparmor.enable = true;
