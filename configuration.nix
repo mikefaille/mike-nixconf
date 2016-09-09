@@ -7,7 +7,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.kernelModules = ["fbcon"];
+  boot.initrd.kernelModules = ["fbcon" "kvm-intel" "tun" "virtio"];
 
   boot.tmpOnTmpfs = true;
   boot.kernelPackages = pkgs.linuxPackages_4_7;
