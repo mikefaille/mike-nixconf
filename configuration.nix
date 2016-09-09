@@ -243,12 +243,11 @@
       packageOverrides = pkgs : rec {
         emacs = pkgs.emacs25pre;
       };
+      bash = {
+        enableCompletion = true;
+        enable = true;
+      };
     };
-    bash = {
-       enableCompletion = true;
-       enable = true;
-    }
-
   };
 
 }
