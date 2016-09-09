@@ -70,11 +70,7 @@
     gimp
     icedtea8_web
     spotify # from nixos unstable
-    python2Full
-    python3
     psmisc #killall
-    python35Packages.bootstrapped-pip
-    python35Packages.virtualenv
     autoconf
     gcc6
     wireshark-gtk
@@ -110,10 +106,15 @@
     # gnome.gtk
     # glibcLocales
     # glibcInfo
+    python2Full
+    python3
+    python35Packages.bootstrapped-pip
+    python35Packages.virtualenv
     python35Packages.libvirt
     python27Packages.libvirt
     python27Packages.pip
     python35Packages.pip
+    python35Packages.docker_compose
     evince
     go
     go2nix
@@ -121,16 +122,10 @@
     kubernetes
     tree
     terminator
-    # python.dockercompose
-    pythonPackages.docker_compose
-    python27Packages.pytz
-    # virtinst
+    virtinst
     # idea                       # editor
-    ### Pytz not found...###
-    # python27Packages.pitz
-    # python35Packages.pytz
-    # # ansible2
-    # virtmanager
+    ansible2
+    virtmanager
     #######################
 
     (import ./pkgs/docker-machine/default.nix)
