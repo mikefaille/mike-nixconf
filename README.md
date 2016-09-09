@@ -6,5 +6,5 @@ My Nix-Os configs
 
 To generate `./hardware-configuration.nix` on /etc/nixos/ run the next command during nixos installation :
 ```
-nixos-generate-config
+nixos-generate-config --root /mnt
 ```
