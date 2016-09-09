@@ -55,8 +55,6 @@
     patchelf
     nix-repl
     wget
-    bashCompletion
-    bashInteractive
     git
     emacs
     chromium
@@ -245,6 +243,10 @@
         emacs = pkgs.emacs25pre;
       };
     };
+    bash = {
+       enableCompletion = true;
+       enable = true;
+    }
 
   };
 
