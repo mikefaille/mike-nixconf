@@ -120,6 +120,7 @@
     mercurial
     kubernetes
     tree
+    terminator
     # python.dockercompose
     pythonPackages.docker_compose
     python27Packages.pytz
