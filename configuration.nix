@@ -93,7 +93,6 @@
     nix-prefetch-git
     godep
     bind
-    (import ./pkgs/minikube/default.nix)
     # automake
     # gnum4
     # pkgconfig
