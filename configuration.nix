@@ -234,6 +234,8 @@
         icedtea = true;
         enablePepperFlash = true; # Chromium removed support for Mozilla (NPAPI) plugins so Adobe Flash no longer works
         enablePepperPDF = true;
+        pulseSupport = true;
+        gnomeSupport = true; # that should permit app to create tray entry
       };
       allowUnfree = true;
 
