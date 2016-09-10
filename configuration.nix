@@ -91,7 +91,6 @@
     aspellDicts.fr
     nodejs
     nix-prefetch-git
-    # (import ./pkgs/minikube/default.nix)
     godep
     bind
     (import ./pkgs/minikube/default.nix)
@@ -123,14 +122,13 @@
     kubernetes
     tree
     terminator
-    virtinst
     # idea                       # editor
     ansible2
-    virtmanager
+    virtmanager # Don't install virtinst because virt-manager provide updated cli alternatives
     #######################
-
-    (import ./pkgs/docker-machine/default.nix)
-
+    minikube
+    docker-machine
+    docker-machine-driver-kvm
   ];
 
   fonts = {
