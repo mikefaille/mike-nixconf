@@ -186,11 +186,11 @@
     	xf86_input_wacom
     	];
 
-#    services.xserver.xkbOptions = "eurosign:e";
+    # services.xserver.xkbOptions = "eurosign:e";
 
-     # Legacy input sources
-#    xserver.synaptics.enable = true;
-#    xserver.multitouch.enable = true;
+    # Legacy input sources
+    # xserver.synaptics.enable = true;
+    # xserver.multitouch.enable = true;
 
     xserver.desktopManager.gnome3.enable = true;
     xserver.displayManager.gdm.enable = true;
@@ -199,8 +199,6 @@
 
     # Output journald log on tty12
     journald.console = "/dev/tty12";
-
-
   };
 
   # KSM
