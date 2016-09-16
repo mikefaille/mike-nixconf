@@ -48,106 +48,126 @@
 
   # };
 
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    patchelf
-    nix-repl
-    wget
-    git
-    emacs
-    gocode # for vim/emacs go completion
-    chromium
-    libreoffice
-    linuxPackages.nvidiabl
-    libinput
-    apparmor-pam
-    apparmor-parser
-    apparmor-profiles
-    apparmor-utils
-    steam
-    simple-scan
-    gimp
-    icedtea8_web
-    spotify # from nixos unstable
-    psmisc #killall
-    autoconf
-    gcc6
-    wireshark-gtk
-    gnumake
-    nasm
-    mpv
-    vlc
-    openjdk
-    (texlive.combine {
+  environment= {
+    variables = {
+      GOPATH = "$HOME/go";
+    };
+    systemPackages = with pkgs; [
+      # bashInteractive
+      patchelf
+      nixUnstable
+      file
+      nix-repl
+      wget
+      git
+      emacs
+      vim
+      gocode # for vim/emacs go completion
+      chromium
+      libreoffice
+      linuxPackages.nvidiabl
+      libinput
+      apparmor-pam
+      apparmor-parser
+      apparmor-profiles
+      apparmor-utils
+      steam
+      simple-scan
+      gimp
+      icedtea8_web
+      spotify # from nixos unstable
+      psmisc #killall
+      autoconf
+      gcc6
+      wireshark-gtk
+      gnumake
+      nasm
+      mpv
+      vlc
+      openjdk
+      (texlive.combine {
         inherit (texlive) scheme-medium type1cm wallpaper tcolorbox environ wrapfig capt-of
         trimspaces;
         # more packages to be found at
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/typesetting/tex/texlive-new/pkgs.nix if needed
         })
-    aspell
-    aspellDicts.en
-    aspellDicts.fr
-    nodejs
-    nix-prefetch-git
-    godep
-    bind
-    # automake
-    # gnum4
-    # pkgconfig
-    # gettext
-    # glib
-    # intltool
-    # glibc
-    # libtool
-    # guile
-    # gnome.gtk
-    # glibcLocales
-    # glibcInfo
-    python2Full
-    python3
-    python35Packages.bootstrapped-pip
-    python35Packages.virtualenv
-    python35Packages.libvirt
-    python27Packages.libvirt
-    python27Packages.pip
-    python35Packages.pip
-    python35Packages.docker_compose
-    evince
-    go
-    go2nix
-    mercurial
-    kubernetes
-    tree
-    terminator
-    # idea                       # editor
-    ansible2
-    virtmanager # Don't install virtinst because virt-manager provide updated cli alternatives
-    #######################
-    minikube
-    docker-machine
-    docker-machine-driver-kvm
-  ];
+      aspell
+      aspellDicts.en
+      aspellDicts.fr
+      nodejs
+      nix-prefetch-git
+      godep
+      bind
+      # automake
+      # gnum4
+      # pkgconfig
+      # gettext
+      # glib
+      # intltool
+      # glibc
+      # libtool
+      # guile
+      # gnome.gtk
+      # glibcLocales
+      # glibcInfo
+      python2Full
+      python3
+      python35Packages.bootstrapped-pip
+      python35Packages.virtualenv
+      python35Packages.libvirt
+      python27Packages.libvirt
+      python27Packages.pip
+      python35Packages.pip
+      python35Packages.docker_compose
+      evince
+      go
+      go2nix
+      mercurial
+      kubernetes
+      tree
+      terminator
+      # idea                       # editor
+      ansible2
+      virtmanager # Don't install virtinst because virt-manager provide updated cli alternatives
+      #######################
+      # minikube
+      docker-machine
+      docker-machine-driver-kvm
+      ####openshift ansible reqs
+      ebtables
+      dnsmasq
+      cdrkit
+      testdisk
+      zsh
+      shellcheck
+      transmission_gtk
+      # terminix
+      dmd
+    ];
+
+
+  };
 
   fonts = {
-     enableFontDir = true;
-     enableGhostscriptFonts = true;
-     fonts = with pkgs; [
-       # corefonts  # Micrsoft free fonts
-       inconsolata  # monospaced
-       ubuntu_font_family  # Ubuntu fonts
-       unifont # some international languages
-       # google-fonts Warning : It's slow down LibreOffice
-       cm_unicode
-       xits-math
-       dejavu_fonts
-       source-code-pro
-       noto-fonts
-       noto-fonts-cjk
-       emojione
-     ];
-   };
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      # corefonts  # Micrsoft free fonts
+      inconsolata  # monospaced
+      ubuntu_font_family  # Ubuntu fonts
+      unifont # some international languages
+      # google-fonts Warning : It's slow down LibreOffice
+      cm_unicode
+      xits-math
+      dejavu_fonts
+      source-code-pro
+      noto-fonts
+      noto-fonts-cjk
+      emojione
+    ];
+  };
 
   # List services that you want to enable:
   services = {
