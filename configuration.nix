@@ -242,7 +242,6 @@
         nativeOnly = true;
         newStdcpp = true;
       };
-      enableCompletion = true;
       firefox = {
         icedtea = true;
         enableGoogleTalkPlugin = true;
@@ -260,11 +259,22 @@
       packageOverrides = pkgs : rec {
         emacs = pkgs.emacs25pre;
       };
-      bash = {
-        enableCompletion = true;
-        enable = true;
-      };
+
     };
   };
+
+  users.extraUsers.michael =
+  { isNormalUser = true;
+    home = "/home/michael";
+    description = "Nickname for root";
+    extraGroups = [ "wheel" "networkmanager" "vboxusers" "kvm" "libvirt" "rkt" "libvirtd" "adm"];
+    shell = "${pkgs.bashInteractive}/bin/bash";
+    # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
+  };
+  # users.defaultUserShell = pkgs.bashInteractive;
+  ## Some try to debug bash subshell.
+  # programs.bash.promptInit = "PS1=\"# \"";
+
+  programs.bash.enableCompletion = true;
 
 }
