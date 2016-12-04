@@ -375,6 +375,11 @@
         gnomeSupport = true; # that should permit app to create tray entry
       };
       allowUnfree = true;
+      packageOverrides = pkgs: with pkgs; {
+        pidgin-with-plugins = pkgs.pidgin-with-plugins.override {
+        plugins = [ pidginsipe ];
+        };
+      };
 
       packageOverrides = pkgs : rec {
         emacs = pkgs.emacs25pre;
@@ -383,12 +388,14 @@
     };
   };
 
+
+
   users.extraUsers.michael =
   { isNormalUser = true;
     home = "/home/michael";
     description = "Nickname for root";
     extraGroups = [ "wheel" "networkmanager" "vboxusers" "kvm" "libvirt" "rkt" "libvirtd" "adm"];
-    shell = "${pkgs.bashInteractive}/bin/bash";
+
     # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
   };
   # users.defaultUserShell = pkgs.bashInteractive;
