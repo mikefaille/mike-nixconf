@@ -290,7 +290,7 @@
   services = {
     nfs.server.enable = true;
     # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
+    openssh.enable = false;
 
     # Enable CUPS to print documents.
     printing.enable = true;
