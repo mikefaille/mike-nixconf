@@ -351,6 +351,7 @@
     vswitch.enable = true;
     docker.enable = true;
     docker.storageDriver = "btrfs";
+    # docker.extraOptions = "--bridge br0";
   };
 
   # Configure packages
