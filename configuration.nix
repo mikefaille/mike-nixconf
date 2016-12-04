@@ -362,6 +362,11 @@
         nativeOnly = true;
         newStdcpp = true;
       };
+
+      curl = pkgs.curl.override {
+        sslSupport = true;
+
+      };
       firefox = {
         icedtea = true;
         enableGoogleTalkPlugin = true;
