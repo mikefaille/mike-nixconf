@@ -72,7 +72,6 @@
       nix-repl
       wget
       git
-      emacs
       vim
       gocode # for vim/emacs go completion
       chromium
