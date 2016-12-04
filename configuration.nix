@@ -288,6 +288,7 @@
 
   # List services that you want to enable:
   services = {
+    nfs.server.enable = true;
     # Enable the OpenSSH daemon.
     # services.openssh.enable = true;
 
