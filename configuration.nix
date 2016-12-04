@@ -371,6 +371,8 @@
         icedtea = true;
         enableGoogleTalkPlugin = true;
         enableAdobeFlash = true;
+        enableGnomeExtensions = true;
+        pulseaudio = true;
       };
       chromium = {
         icedtea = true;
