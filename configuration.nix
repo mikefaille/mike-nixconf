@@ -146,22 +146,126 @@
       virtmanager # Don't install virtinst because virt-manager provide updated cli alternatives
       #######################
       # minikube
-      docker-machine
-      docker-machine-driver-kvm
+      # docker-machine
+      # docker-machine-driver-kvm
       ####openshift ansible reqs
       ebtables
-      dnsmasq
+      # dnsmasq
       cdrkit
       testdisk
       zsh
+
+      # lint for bash
       shellcheck
+
       transmission_gtk
       # terminix
-      dmd
+
+      pandoc
+
+      imagemagick
+      firefox
+      libguestfs
+      # openssl
+      vagrant
+      cloud-init
+      libvirt
+      screen
+      rsync
+      iftop
+      packer
+      axel
+      asciinema
+      google-chrome
+      libproxy
+      gnome3.gconf
+      xdg-user-dirs
+      davmail
+      # redsocks
+      gtk-recordmydesktop
+      ffmpeg
+      simplescreenrecorder
+      cntlm # also configured using service
+      proxychains
+      sqldeveloper
+      pythonPackages.ipython
+      freemind
+      protobuf3_0
+      popfile
+
+      pidgin-with-plugins
+
+      # pkgs.desktops.gnome-3.3.20.core.empathy
+      # empathy
+      thunderbird
+
+      # trying some yaml linter
+      pythonPackages.yapf
+      pythonPackages.yamllint
+      pythonPackages.pyaml
+
+      # Powefull opensource soft doc search
+      zeal
+
+      containerd
+      virt-viewer
+      ruby
+
+      gnome3.pomodoro
+      # empathy
+      # ruby dev
+      bundix
+      bundler
+      rake
+      # ruby.libvirt
+      cloc
+      pdftk
+      wine
+      maven
+      gradle
+
+      proxychains
+      openconnect
+      pwgen
+      dmidecode
+      nodePackages.gulp
+      openssl
+      lsof
+      pythonPackages.dopy
+      nss
+      nfs-utils
+      # dring
+      inkscape
+      scribus
+      #cmdline calculator
+      bc
+      nethogs
+      ntopng
+      openssl
+      subversionClient
+
+      dos2unix
+
+      gnome3.cheese
+      pythonPackages.sqlite3
+      dnsmasq
+      docker-machine
+      docker-machine-kvm
+
+      bridge-utils
+      fasd
+      calibre
+      docker
+      sshpass
     ];
 
 
   };
+
+  systemd.services.docker.serviceConfig.environment = [
+    "http_proxy=http://127.0.0.1:3128"
+    ];
+
 
   fonts = {
     enableFontDir = true;
