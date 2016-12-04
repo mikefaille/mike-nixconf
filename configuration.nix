@@ -317,6 +317,7 @@
 
     # Output journald log on tty12
     journald.console = "/dev/tty12";
+    gnome3.gvfs.enable = true;
   };
 
   # KSM
