@@ -124,13 +124,16 @@
       # glibcInfo
       python2Full
       python3
-      python35Packages.bootstrapped-pip
+
       python35Packages.virtualenv
       python35Packages.libvirt
       python27Packages.libvirt
       python27Packages.pip
       python35Packages.pip
       python35Packages.docker_compose
+      pythonPackages.markupsafe
+      libyaml
+      # cacert
       evince
       go
       go2nix
