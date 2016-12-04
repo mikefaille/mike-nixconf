@@ -10,17 +10,27 @@
   boot.initrd.kernelModules = ["fbcon" "kvm-intel" "tun" "virtio"];
 
   boot.tmpOnTmpfs = true;
-  boot.kernelPackages = pkgs.linuxPackages_4_7;
+  boot.kernelPackages = pkgs.linuxPackages_4_8;
   # In conflict with latest kernel
   # boot.kernelPackages = pkgs.linux_grsec_server_latest;
 
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./emacs-setup.nix
     ];
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.extraHosts =
+  ''
+     127.0.0.1 wls12c-r2-1.private
+     127.0.0.1 nixos
+     142.137.247.120 lounge.cedille.club
+     192.168.99.100 vagrant.f8
+
+  '';
+  # networking.proxy.default = http://127.0.0.1:5000; # "http://127.0.0.1:3128";
 
   hardware.cpu.intel.updateMicrocode = true;
   # Select internationalisation properties.
