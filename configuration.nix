@@ -7,10 +7,14 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.kernelModules = ["fbcon" "kvm-intel" "tun" "virtio"];
+  boot.initrd.kernelModules = ["fbcon" "kvm-intel" "tun" "virtio"  ];
+  # boot.extraModulePackages = [ pkgs.linuxPackages.sysdig ];
+
+
+
 
   boot.tmpOnTmpfs = true;
-  boot.kernelPackages = pkgs.linuxPackages_4_8;
+  boot.kernelPackages = pkgs.linuxPackages_4_9;
   # In conflict with latest kernel
   # boot.kernelPackages = pkgs.linux_grsec_server_latest;
 
@@ -22,14 +26,7 @@
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.extraHosts =
-  ''
-     127.0.0.1 wls12c-r2-1.private
-     127.0.0.1 nixos
-     142.137.247.120 lounge.cedille.club
-     192.168.99.100 vagrant.f8
 
-  '';
   # networking.proxy.default = http://127.0.0.1:5000; # "http://127.0.0.1:3128";
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -63,6 +60,8 @@
   environment= {
     variables = {
       GOPATH = "$HOME/go";
+      TERMINFO_DIRS = "/run/current-system/sw/share/terminfo";
+      ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
     };
     systemPackages = with pkgs; [
       # bashInteractive
@@ -71,12 +70,12 @@
       file
       nix-repl
       wget
-      git
-      vim
+      # git # Remplaceable par gitfull
+      (import ./vim.nix)
       gocode # for vim/emacs go completion
-      chromium
+      # chromium
       libreoffice
-      linuxPackages.nvidiabl
+
       libinput
       apparmor-pam
       apparmor-parser
@@ -86,19 +85,52 @@
       simple-scan
       gimp
       icedtea8_web
-      spotify # from nixos unstable
+      spotify
       psmisc #killall
       autoconf
       gcc6
+      gdb
       wireshark-gtk
       gnumake
+      # bazel44
       nasm
       mpv
       vlc
       openjdk
+      visualvm
       (texlive.combine {
         inherit (texlive) scheme-medium type1cm wallpaper tcolorbox environ wrapfig capt-of
-        trimspaces;
+        collection-latexrecommended
+         numprint
+         pbox
+         framed
+         breakurl
+         cleveref
+        collection-langfrench
+        trimspaces
+        fnpct
+        translations
+        cnltx
+        pgfopts
+        endnotes
+        titling
+        titlesec
+
+
+
+        # template ÉTS
+        hyphenat
+        tabto-ltx
+        enumitem
+        lipsum
+        multibib
+
+        # CV
+        bold-extra
+        shadowtext
+         ;
+
+
         # more packages to be found at
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/typesetting/tex/texlive-new/pkgs.nix if needed
         })
@@ -109,6 +141,7 @@
       nix-prefetch-git
       godep
       bind
+
       # automake
       # gnum4
       # pkgconfig
@@ -122,7 +155,7 @@
       # glibcLocales
       # glibcInfo
       python2Full
-      python3
+      python35
 
       python35Packages.virtualenv
       python35Packages.libvirt
@@ -137,22 +170,25 @@
       go
       go2nix
       mercurial
-      kubernetes
+      # kubernetes
       tree
       terminator
-      # idea                       # editor
+
+      idea.pycharm-community
+      idea.idea-eap
       ansible2
       virtmanager # Don't install virtinst because virt-manager provide updated cli alternatives
       #######################
       # minikube
       # docker-machine
-      # docker-machine-driver-kvm
+      # docker-machine-kvm
       ####openshift ansible reqs
       ebtables
       # dnsmasq
       cdrkit
       testdisk
       zsh
+
 
       # lint for bash
       shellcheck
@@ -189,14 +225,14 @@
       sqldeveloper
       pythonPackages.ipython
       freemind
-      protobuf3_0
+      # protobuf3_0
       popfile
 
       pidgin-with-plugins
 
       # pkgs.desktops.gnome-3.3.20.core.empathy
       # empathy
-      thunderbird
+      # thunderbird
 
       # trying some yaml linter
       pythonPackages.yapf
@@ -208,18 +244,21 @@
 
       containerd
       virt-viewer
-      ruby
+      # ruby
 
       gnome3.pomodoro
       # empathy
       # ruby dev
       bundix
-      bundler
-      rake
+      # bundler
+      # rake
       # ruby.libvirt
       cloc
       pdftk
-      wine
+
+      wineStaging
+      winetricks
+
       maven
       gradle
 
@@ -248,15 +287,118 @@
       gnome3.cheese
       pythonPackages.sqlite3
       dnsmasq
-      docker-machine
-      docker-machine-kvm
+
 
       bridge-utils
       fasd
       calibre
       docker
       sshpass
+
+      system-config-printer
+
+      slack
+        pipelight
+        citrix_receiver
+        corkscrew
+        languagetool
+        gnome3.networkmanager_openconnect
+        gnucash26
+
+      xorg.xkbprint # print graphical description of keyboard
+      sysdig
+      # pp-aterm
+
+      paprefs
+      pavucontrol
+
+
+      weechat
+      ledger
+      haskellPackages.hledger
+      # haskellPackages.hledger-ui
+      # haskellPackages.hledger-web
+      # strategoxt # pretty print nix store pp-aterm
+      atom
+      guile
+      lsh # require by vagant openshift-ansible for sftp-server
+      qpdfview
+      adobe-reader
+      playonlinux
+
+      docbook5
+      libxslt
+      docbook_xml_xslt
+      fop
+
+
+      bedup
+      duperemove
+      # firefox-bin
+      rekonq
+      midori
+      dia
+      # buck
+      ant
+      plantuml
+      ack
+
+      graphviz
+
+      # kubernetes
+      unzipNLS
+      eclipses.eclipse-platform
+      gitAndTools.gitFull
+      pciutils # lspci
+
+      rfkill # manage wifi up/down
+      # rustBeta.rustc
+      rustracer
+      cargo
+      # ring
+      # # ring-gtk
+      # lrc
+      pkgconfig
+      clang
+      platformio
+            # platformioPackages
+      pypi2nix
+      php70Packages.composer
+      php
+      libmysql # mysql client
+      ruby
+      mosquitto
+      python35Packages.paho-mqtt
+      arduino
+      skype
+      google-cloud-sdk
+      kubernetes152
+      ncdu
+      filezilla
+      # lxd
+      # lxc
+      expect
+      s3cmd
+      freerdp
+      gnupg
+      meld
+      # onlykey-agent
+      ltrace
+
+
+      stow
+      neovim
+      lttng-tools
+      babeltrace
+      lttng-ust
+      # systemtap
+      tcpdump
+      libpcap
+      oraclejdk6
+
+
     ];
+
 
 
   };
@@ -271,29 +413,45 @@
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       # corefonts  # Micrsoft free fonts
-      inconsolata  # monospaced
+      inconsolata  # monospaced.
+      terminus_font
+      hasklig
       ubuntu_font_family  # Ubuntu fonts
       unifont # some international languages
       # google-fonts Warning : It's slow down LibreOffice
       cm_unicode
       xits-math
       dejavu_fonts
-      source-code-pro
       noto-fonts
       noto-fonts-cjk
       emojione
+      font-awesome-ttf
     ];
   };
 
-  # List services that you want to enable:
+  # list services that you want to enable:
   services = {
+    # telepathy.enable = true;
+    # emacs = {
+    #   enable = true;
+    #   defaultEditor = true;
     nfs.server.enable = true;
+
+    # };
+    # dnsmasq.enable = true;
+    # vagrant landrush :
+    dnsmasq.extraConfig = ''
+      server=/vagrant.f8/127.0.0.1#10053
+
+    '';
+    privoxy.enable = true;
+    redis.enable = false;
     # Enable the OpenSSH daemon.
-    openssh.enable = false;
+    openssh.enable = true;
 
     # Enable CUPS to print documents.
     printing.enable = true;
-    printing.drivers = [ pkgs.splix ];
+    printing.drivers = [ pkgs.splix pkgs.postscript-lexmark ];
 
     # Enable the X11 windowing system.
     xserver.enable = true;
@@ -302,7 +460,9 @@
     xserver.modules =  with pkgs; [
     	xf86_input_wacom
     	];
+    xserver.exportConfiguration = true;
 
+    # powerManagement.enable = true;
     # services.xserver.xkbOptions = "eurosign:e";
 
     # Legacy input sources
@@ -316,19 +476,36 @@
 
     # Output journald log on tty12
     journald.console = "/dev/tty12";
+
+    # dbus.enable = true;
     gnome3.gvfs.enable = true;
+g
   };
+
+
+  services.dbus.packages = [ pkgs.gnome.GConf ];
+  # environment.gnome3.packageSet = "pkgs.gnome3_22";
+  environment.pathsToLink = [ "/etc/gconf" ];
 
   # KSM
   hardware.enableKSM = true;
 
   hardware.opengl.driSupport32Bit = true;
-  hardware.pulseaudio.support32Bit = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+
 
   #Enable support for SANE scanners.
   hardware.sane.enable = true;
 
-  hardware.pulseaudio.enable = true;
+
+
+  # bluetooth
+
+  hardware.bluetooth.enable = true;
+
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.extraUsers.guest = {
@@ -339,7 +516,7 @@
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.09";
 
-  powerManagement.enable = true;
+  # powerManagement.enable = true;
   security.apparmor.enable = true;
   security.apparmor.confineSUIDApplications = true;
   nix.useSandbox = true;
@@ -357,6 +534,7 @@
   # Configure packages
   nixpkgs = {
     config = {
+
       steam = pkgs.steam.override {
         nativeOnly = true;
         newStdcpp = true;
@@ -386,11 +564,17 @@
         plugins = [ pidginsipe ];
         };
       };
+      emacs = pkgs.emacs25.override {
 
-      packageOverrides = pkgs : rec {
-        emacs = pkgs.emacs25pre;
+        withGTK3 = true;
+        withGTK2 = false;
+        withXwidgets = true;
       };
-
+      gnucash =   pkgs.gnucash.override {
+        libmysql = true;
+        sqlite = true;
+        postgresql = true;
+      };
     };
   };
 
@@ -400,7 +584,7 @@
   { isNormalUser = true;
     home = "/home/michael";
     description = "Nickname for root";
-    extraGroups = [ "wheel" "networkmanager" "vboxusers" "kvm" "libvirt" "rkt" "libvirtd" "adm"];
+    extraGroups = [ "wheel" "networkmanager" "vboxusers" "kvm" "libvirt" "rkt" "libvirtd" "adm" "users" "docker" "dialout"];
 
     # openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
   };
@@ -409,6 +593,7 @@
   # programs.bash.promptInit = "PS1=\"# \"";
 
   programs.bash.enableCompletion = true;
+  programs.zsh.enableCompletion = true;
 
   lib.fetchers.proxyImpureEnvVars = [
     # We borrow these environment variables from the caller to allow
@@ -417,4 +602,90 @@
     # by definition pure.
     "http_proxy" "https_proxy" "ftp_proxy" "all_proxy" "no_proxy"
   ];
+
+
+  services.udev.extraRules = ''
+  # Copyright 2014-present PlatformIO <contact@platformio.org>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# UDEV Rules for PlatformIO supported boards, http://platformio.org/boards
+#
+# The latest version of this file may be found at:
+# 	https://github.com/platformio/platformio-core/blob/develop/scripts/99-platformio-udev.rules
+#
+# This file must be placed at:
+# 	/etc/udev/rules.d/99-platformio-udev.rules    (preferred location)
+#   	or
+# 	/lib/udev/rules.d/99-platformio-udev.rules    (req'd on some broken systems)
+#
+# To install, type this command in a terminal:
+# 	sudo cp 99-platformio-udev.rules /etc/udev/rules.d/99-platformio-udev.rules
+#
+# Restart "udev" management tool:
+#	sudo service udev restart
+#		or
+# 	sudo udevadm control --reload-rules
+#	sudo udevadm trigger
+#
+# After this file is installed, physically unplug and reconnect your board.
+
+# CP210X USB UART
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0666"
+
+# FT232R USB UART
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE:="0666"
+
+# Prolific Technology, Inc. PL2303 Serial Port
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE:="0666"
+
+# QinHeng Electronics HL-340 USB-Serial adapter
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE:="0666"
+
+# Arduino boards
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="[08][02]*", MODE:="0666"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="2a03", ATTRS{idProduct}=="[08][02]*", MODE:="0666"
+
+# Arduino SAM-BA
+ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="6124", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="6124", ENV{MTP_NO_PROBE}="1"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="6124", MODE:="0666"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="6124", MODE:="0666"
+
+# Digistump boards
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16d0", ATTRS{idProduct}=="0753", MODE:="0666"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="16d0", ATTRS{idProduct}=="0753", MODE:="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
+
+# STM32 discovery boards, with onboard st/linkv2
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374?", MODE:="0666"
+
+# USBtiny
+SUBSYSTEMS=="usb", ATTRS{idProduct}=="0c9f", ATTRS{idVendor}=="1781", MODE="0666"
+
+# Teensy boards
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", ENV{ID_MM_DEVICE_IGNORE}="1"
+ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", ENV{MTP_NO_PROBE}="1"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", MODE:="0666"
+KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789]?", MODE:="0666"
+
+#TI Stellaris Launchpad
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1cbe", ATTRS{idProduct}=="00fd", MODE="0666"
+
+#TI MSP430 Launchpad
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0451", ATTRS{idProduct}=="f432", MODE="0666"
+
+# CMSIS-DAP compatible adapters
+ATTRS{product}=="*CMSIS-DAP*", MODE="664", GROUP="plugdev"
+  '';
+
 }

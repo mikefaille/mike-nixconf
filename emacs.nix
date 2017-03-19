@@ -105,7 +105,7 @@ in
     # dash-functional
     # s
     # diminish
-    # nix-mode
+    nix-mode
     # helm-nixos-options
     # company-nixos-options
     # exec-path-from-shell
@@ -139,4 +139,5 @@ in
     dejavu_fonts
     font-awesome-ttf
     python35
+    guile
   ]))
