@@ -26,6 +26,7 @@
   require =
     [ # Include the results of the hardware scan.
       ./golang-dev.nix
+      ./desktop.nix
     ];
 
   # networking.hostName = "nixos"; # Define your hostname.
