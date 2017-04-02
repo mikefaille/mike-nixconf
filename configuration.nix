@@ -23,6 +23,10 @@
       ./hardware-configuration.nix
       ./emacs-setup.nix
     ];
+  require =
+    [ # Include the results of the hardware scan.
+      ./golang-dev.nix
+    ];
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -59,7 +63,6 @@
   # $ nix-env -qaP | grep wget
   environment= {
     variables = {
-      GOPATH = "$HOME/go";
       TERMINFO_DIRS = "/run/current-system/sw/share/terminfo";
       ASPELL_CONF = "dict-dir /run/current-system/sw/lib/aspell";
     };
@@ -72,7 +75,6 @@
       wget
       # git # Remplaceable par gitfull
       (import ./vim.nix)
-      gocode # for vim/emacs go completion
       # chromium
       libreoffice
 
@@ -139,7 +141,7 @@
       aspellDicts.fr
       nodejs
       nix-prefetch-git
-      godep
+
       bind
 
       # automake
@@ -167,7 +169,7 @@
       libyaml
       # cacert
       evince
-      go
+
       go2nix
       mercurial
       # kubernetes
