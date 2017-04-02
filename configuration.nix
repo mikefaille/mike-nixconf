@@ -24,7 +24,7 @@
       ./emacs-setup.nix
     ];
   require =
-    [ # Include the results of the hardware scan.
+    [
       ./golang-dev.nix
       ./desktop.nix
     ];
@@ -59,6 +59,7 @@
   #   };
 
   # };
+
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -443,7 +444,7 @@
     # dbus.enable = true;
 
     # gnome3.gvfs.enable = true;
-g
+
 
   };
 
@@ -479,7 +480,7 @@ g
   # };
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.09";
+  system.stateVersion = "17.03";
 
   # powerManagement.enable = true;
   security.apparmor.enable = true;
