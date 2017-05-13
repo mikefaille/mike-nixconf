@@ -270,7 +270,6 @@
 
       gnome3.cheese
       pythonPackages.sqlite3
-      dnsmasq
 
 
       bridge-utils
@@ -401,11 +400,10 @@
     nfs.server.enable = true;
 
     # };
-    # dnsmasq.enable = true;
+    dnsmasq.enable = true;
     # vagrant landrush :
     dnsmasq.extraConfig = ''
       server=/vagrant.f8/127.0.0.1#10053
-
     '';
     privoxy.enable = true;
     redis.enable = false;
