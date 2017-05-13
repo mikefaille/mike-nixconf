@@ -103,41 +103,21 @@
       openjdk
       visualvm
       (texlive.combine {
-        inherit (texlive) scheme-medium type1cm wallpaper tcolorbox environ wrapfig capt-of
+        inherit (texlive) scheme-medium  wallpaper  environ wrapfig capt-of
+        collection-latexextra
         collection-latexrecommended
-         numprint
-         pbox
-         framed
-         breakurl
-         cleveref
+
         collection-langfrench
-        trimspaces
-        fnpct
-        translations
-        cnltx
-        pgfopts
-        endnotes
-        titling
-        titlesec
-
-
 
         # template ÉTS
-        hyphenat
-        tabto-ltx
-        enumitem
-        lipsum
         multibib
 
-        # CV
-        bold-extra
-        shadowtext
-         ;
+        glossaries-extra
 
 
         # more packages to be found at
         # https://github.com/NixOS/nixpkgs/blob/master/pkgs/tools/typesetting/tex/texlive-new/pkgs.nix if needed
-        })
+                 ;})
       aspell
       aspellDicts.en
       aspellDicts.fr
