@@ -88,7 +88,7 @@
       steam
       simple-scan
       gimp
-      icedtea8_web
+      icedtea_web
       spotify
       psmisc #killall
       autoconf
