@@ -14,7 +14,7 @@
 
 
   boot.tmpOnTmpfs = true;
-  boot.kernelPackages = pkgs.linuxPackages_4_9;
+  boot.kernelPackages = pkgs.linuxPackages_4_10;
   # In conflict with latest kernel
   # boot.kernelPackages = pkgs.linux_grsec_server_latest;
 
