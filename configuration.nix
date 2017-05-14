@@ -154,16 +154,16 @@
 
       go2nix
       mercurial
-      # kubernetes
+      kubernetes
       tree
       terminator
 
       idea.pycharm-community
-      idea.idea-eap
+      # idea.idea-eap
       ansible2
       virtmanager # Don't install virtinst because virt-manager provide updated cli alternatives
       #######################
-      # minikube
+      minikube
       # docker-machine
       # docker-machine-kvm
       ####openshift ansible reqs
