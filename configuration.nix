@@ -398,8 +398,12 @@
     #   enable = true;
     #   defaultEditor = true;
     nfs.server.enable = true;
-
-    # };
+    physlock = {
+      enable = true;
+      lockOn.suspend = true;
+      lockOn.hibernate = true;
+      disableSysRq = true;
+    };
     dnsmasq.enable = true;
     # vagrant landrush :
     dnsmasq.extraConfig = ''
