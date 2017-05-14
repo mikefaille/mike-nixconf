@@ -286,7 +286,7 @@
         corkscrew
         languagetool
         gnome3.networkmanager_openconnect
-        gnucash26
+        gnucash
 
       xorg.xkbprint # print graphical description of keyboard
       sysdig
