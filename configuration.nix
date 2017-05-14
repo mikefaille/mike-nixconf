@@ -427,10 +427,6 @@
   };
 
 
-  services.dbus.packages = [ pkgs.gnome.GConf ];
-  # environment.gnome3.packageSet = "pkgs.gnome3_22";
-  environment.pathsToLink = [ "/etc/gconf" ];
-
   # KSM
   hardware.enableKSM = true;
 
