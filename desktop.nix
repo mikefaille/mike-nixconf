@@ -28,7 +28,7 @@
             # Enable the X11 windowing system.
     services.xserver = {
       enable = true;
-      layout = "ca_multi";
+      layout = "ca"; # check avalable values in this folder /nix/store/*-xkeyboard-config-*/etc/X11/xkb/symbols/macintosh_vndr/
       libinput.enable = true;
       wacom.enable = true;
       # xserver.exportConfiguration = true;
@@ -38,19 +38,19 @@
       # Legacy input sources
       # xserver.synaptics.enable = true;
       # xserver.multitouch.enable = true;
-      desktopManager.gnome3.enable = true;
-      displayManager.lightdm.enable = true;
-      videoDrivers = [ "nvidiaBeta" ];
+#      desktopManager.gnome3.enable = true;
+#      displayManager.lightdm.enable = true;
+#      videoDrivers = [ "nvidiaBeta" ];
+       videoDrivers = [ 
+         "intel"
+	 "nvidia"
+       ];
     };
     # Configure packages
     nixpkgs = {
       config = {
-
-        steam = pkgs.steam.override {
-          nativeOnly = true;
-          newStdcpp = true;
-        };
-
+        
+        hardware.enableAllfirmware = true;
         curl = pkgs.curl.override {
           sslSupport = true;
 
@@ -58,7 +58,7 @@
         firefox = {
           icedtea = true;
           enableGoogleTalkPlugin = true;
-          enableAdobeFlash = true;
+          #enableAdobeFlash = true;
           enableGnomeExtensions = true;
           pulseaudio = true;
         };
@@ -70,23 +70,13 @@
           gnomeSupport = true; # that should permit app to create tray entry
         };
         allowUnfree = true;
-        packageOverrides = pkgs: with pkgs; {
-          pidgin-with-plugins = pkgs.pidgin-with-plugins.override {
-          plugins = [ pidginsipe ];
-          };
-        };
         emacs = pkgs.emacs25.override {
 
           withGTK3 = true;
           withGTK2 = false;
           withXwidgets = true;
         };
-        gnucash =   pkgs.gnucash.override {
-          libmysql = true;
-          sqlite = true;
-          postgresql = true;
         };
       };
     };
-  };
 }

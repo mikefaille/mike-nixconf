@@ -1,37 +1,56 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  #imports = [ <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-graphical.nix> ];
+  imports = [ 
+
+<nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix>
+<nixos/modules/installer/cd-dvd/channel.nix> 
+      ./emacs-setup.nix
+];
 
   # Use the systemd-boot efi boot loader.
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.kernelModules = ["fbcon" "kvm-intel" "tun" "virtio"  ];
+  boot.initrd.kernelModules = ["wl" "kvm-intel" "tun" "virtio"  ];
   # boot.extraModulePackages = [ pkgs.linuxPackages.sysdig ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
+  nixpkgs.config.allowUnfree = true;
+  hardware.enableAllFirmware = true;
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel index=0 model=intel-mac-auto id=PCH
+    options snd_hda_intel index=1 model=intel-mac-auto id=HDMI
+    options snd_hda_intel model=mbp101
+    options hid_apple fnmode=2
+  '';
 
-
+  boot.kernelModules = [ "applesmc" ];
+  boot.kernelParams = [
+    # https://help.ubuntu.com/community/AppleKeyboard
+    # https://wiki.archlinux.org/index.php/Apple_Keyboarditrix_receiver
+    "options libata.force=noncq"
+    #options resume=/dev/sda5
+    "hid_apple.fnmode=1"
+    "hid_apple.iso_layout=0"
+    "hid_apple.swap_opt_cmd=1"
+  ];
 
   boot.tmpOnTmpfs = true;
-  boot.kernelPackages = pkgs.linuxPackages_4_10;
+  boot.kernelPackages = pkgs.linuxPackages_4_13;
   # In conflict with latest kernel
   # boot.kernelPackages = pkgs.linux_grsec_server_latest;
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./emacs-setup.nix
-    ];
   require =
     [
       ./golang-dev.nix
       ./desktop.nix
     ];
 
-  # networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  networking.hostName = "nixos"; # Define your hostname.
+  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.enableB43Firmware = true;
   # networking.proxy.default = http://127.0.0.1:5000; # "http://127.0.0.1:3128";
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -71,15 +90,14 @@
     systemPackages = with pkgs; [
       # bashInteractive
       patchelf
-      nixUnstable
       file
       nix-repl
       wget
       # git # Remplaceable par gitfull
-      (import ./vim.nix)
+     # (import ./vim.nix)
       # chromium
       libreoffice
-
+      vim
       libinput
       apparmor-pam
       apparmor-parser
@@ -89,7 +107,7 @@
       simple-scan
       gimp
       icedtea_web
-      spotify
+      #spotify
       psmisc #killall
       autoconf
       gcc6
@@ -138,17 +156,17 @@
       # gnome.gtk
       # glibcLocales
       # glibcInfo
-      python2Full
-      python35
+#      python2Full
+#      python35
 
-      python35Packages.virtualenv
-      python35Packages.libvirt
-      python27Packages.libvirt
-      python27Packages.pip
-      python35Packages.pip
-      python35Packages.docker_compose
-      pythonPackages.markupsafe
-      libyaml
+ #     python35Packages.virtualenv
+ #     python35Packages.libvirt
+ #     python27Packages.libvirt
+#      python27Packages.pip
+#      python35Packages.pip
+#      python35Packages.docker_compose
+#      pythonPackages.markupsafe
+#      libyaml
       # cacert
       evince
 
@@ -186,7 +204,7 @@
       firefox
       libguestfs
       # openssl
-      vagrant
+      #vagrant
       cloud-init
       libvirt
       screen
@@ -206,7 +224,7 @@
       simplescreenrecorder
       cntlm # also configured using service
       proxychains
-      sqldeveloper
+      # sqldeveloper # proprietary from oracle
       pythonPackages.ipython
       freemind
       # protobuf3_0
@@ -240,8 +258,6 @@
       cloc
       pdftk
 
-      wineStaging
-      winetricks
 
       maven
       gradle
@@ -269,7 +285,6 @@
       dos2unix
 
       gnome3.cheese
-      pythonPackages.sqlite3
 
 
       bridge-utils
@@ -278,14 +293,9 @@
       docker
       sshpass
 
-      system-config-printer
-
       slack
-        pipelight
-        citrix_receiver
         corkscrew
         languagetool
-        gnome3.networkmanager_openconnect
         gnucash
 
       xorg.xkbprint # print graphical description of keyboard
@@ -307,18 +317,16 @@
       lsh # require by vagant openshift-ansible for sftp-server
       qpdfview
       adobe-reader
-      playonlinux
 
       docbook5
-      libxslt
-      docbook_xml_xslt
+#      libxslt
+#      docbook_xml_xslt
       fop
 
 
       bedup
       duperemove
       # firefox-bin
-      rekonq
       midori
       dia
       # buck
@@ -346,16 +354,15 @@
       platformio
             # platformioPackages
       pypi2nix
-      php70Packages.composer
-      php
+ #     php70Packages.composer
+ #     php
       libmysql # mysql client
       ruby
       mosquitto
       python35Packages.paho-mqtt
       arduino
-      skype
+      #skype
       google-cloud-sdk
-      kubernetes152
       ncdu
       filezilla
       # lxd
@@ -377,7 +384,6 @@
       # systemtap
       tcpdump
       libpcap
-      oraclejdk6
 
 
     ];
@@ -386,13 +392,11 @@
 
   };
 
-  systemd.services.docker.serviceConfig.environment = [
-    "http_proxy=http://127.0.0.1:3128"
-    ];
 
 
   # list services that you want to enable:
   services = {
+    hardware.pommed.enable = true;
     # telepathy.enable = true;
     # emacs = {
     #   enable = true;
@@ -416,8 +420,10 @@
 
     # Enable CUPS to print documents.
     printing.enable = true;
-    printing.drivers = [ pkgs.splix pkgs.postscript-lexmark ];
-
+    printing.drivers = [ pkgs.brgenml1lpr pkgs.splix pkgs.hplip pkgs.gutenprint pkgs.postscript-lexmark ];
+     
+    avahi.enable = true;
+    avahi.nssmdns = true;
     acpid.enable = true;
 
     # Output journald log on tty12
@@ -433,7 +439,7 @@
 
   # KSM
   hardware.enableKSM = true;
-
+  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
   hardware.opengl.driSupport32Bit = true;
   hardware.pulseaudio = {
     enable = true;
@@ -458,9 +464,9 @@
   # };
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "17.03";
+  system.stateVersion = "17.09";
 
-  # powerManagement.enable = true;
+  powerManagement.enable = true;
   security.apparmor.enable = true;
   security.apparmor.confineSUIDApplications = true;
   nix.useSandbox = true;
@@ -478,7 +484,7 @@
 
 
 
-
+  users.extraGroups.docker.gid = lib.mkForce config.ids.gids.docker;
   users.extraUsers.michael =
   { isNormalUser = true;
     home = "/home/michael";
